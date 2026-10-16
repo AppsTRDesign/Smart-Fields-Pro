@@ -141,4 +141,4 @@ sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
 
 ## Lisans
 
-GPLv2 veya üstü. Geliştirici: **AppsTRDesign** — [worldofwar.site](https://wplugins.shop)
+GPLv2 veya üstü. Geliştirici: **AppsTRDesign** — [wplugins.shop](https://wplugins.shop)
