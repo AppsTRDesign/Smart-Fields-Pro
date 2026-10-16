@@ -10,7 +10,8 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/s%C3%BCr%C3%BCm-1.3.0-4f46e5" alt="Sürüm 1.3.0">
+  <img src="https://img.shields.io/github/v/release/AppsTRDesign/Smart-Fields-Pro">
+  <img src="https://img.shields.io/github/downloads/AppsTRDesign/Smart-Fields-Pro/total">
   <img src="https://img.shields.io/badge/WordPress-6.0%2B-21759b?logo=wordpress" alt="WordPress 6.0+">
   <img src="https://img.shields.io/badge/PHP-7.4%2B-777bb4?logo=php&amp;logoColor=white" alt="PHP 7.4+">
   <img src="https://img.shields.io/badge/WooCommerce-HPOS%20uyumlu-96588a?logo=woocommerce&amp;logoColor=white" alt="WooCommerce HPOS uyumlu">
