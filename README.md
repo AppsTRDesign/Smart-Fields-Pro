@@ -141,4 +141,4 @@ sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
 
 ## License
 
-GPLv2 or later. Developed by **AppsTRDesign** — [worldofwar.site](https://wplugins.shop)
+GPLv2 or later. Developed by **AppsTRDesign** — [wplugins.shop](https://wplugins.shop)
