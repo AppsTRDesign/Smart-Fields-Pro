@@ -127,6 +127,18 @@ sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
 
 ## Değişiklik Günlüğü
 
+### 1.3.1
+
+* Yeni: özet kartlı ziyaretçi puanları; tüm puan ve yorumlar JSON-LD'ye eklenir.
+* Yeni: fotoğraflı yorum, beğeni, site sahibi yanıtı, üyelere özel anahtarlar, AJAX sıralama ve sayfalama içeren gelişmiş yorum bölümü.
+* Yeni: filtreli ve en yüksek puanlılar listeli site geneli Yorumlar sayfası.
+* Yeni: hazır şablonlu form oluşturucu, bildirimler, otomatik yanıt, WordPress maili veya SMTP ve admin gelen kutusu.
+* Yeni: her adıma resim veya video eklenebilen Adımlar alanı ve Çoklu Puan alanı.
+* Yeni: döviz kurlu ve ziyaretçi para birimi seçicili çoklu para birimi desteği.
+* Yeni: tüm şablonlarda zengin metinli Kısa Açıklama ve galeriden otomatik öne çıkan görsel.
+* İyileştirme: tüm yeni ekranlar tamamen mobil uyumlu.
+* Puan ve yorum sistemi, gelen kutulu form oluşturucu, çoklu para birimi ve Kısa Açıklama alanı eklendi. Yorumlar, hızlı puan ve para birimi seçici siz açana kadar kapalı kalır.
+
 ### 1.3.0
 - Ziyaretçi puanları, gelişmiş yorum bölümü (fotoğraflı yorum, beğeni, site sahibi yanıtı) ve site geneli Yorumlar sayfası. Hepsi JSON-LD'ye aktarılır.
 - WordPress maili veya SMTP ile çalışan form oluşturucu ve admin gelen kutusu.
