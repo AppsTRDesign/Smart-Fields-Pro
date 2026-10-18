@@ -127,6 +127,18 @@ sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
 
 ## Changelog
 
+### 1.3.1
+
+* New: visitor ratings with a summary card; all ratings and reviews are added to JSON-LD.
+* New: advanced review section with photo reviews, likes, owner replies, members-only switches, and AJAX sorting and paging.
+* New: site-wide Reviews page with filters and a top-rated list.
+* New: form builder with presets, notifications, auto-reply, WordPress mail or SMTP, and an admin inbox.
+* New: Steps field with an image or video per step, and a Multi Rating field.
+* New: multi-currency prices with exchange rates and a visitor currency switcher.
+* New: rich text Short Description in every template and an automatic featured image from the gallery.
+* Improved: every new screen is fully responsive.
+* Adds ratings and reviews, a form builder with inbox, multi-currency prices and a Short Description field. Reviews, quick ratings and the currency switcher stay off until you enable them.
+
 ### 1.3.0
 - Visitor ratings, an advanced review section (photo reviews, likes, owner replies) and a site-wide Reviews page. All of it is exported to JSON-LD.
 - Form builder with WordPress mail or SMTP and an admin inbox.
