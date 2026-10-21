@@ -30,15 +30,26 @@
 
 ## Why Smart Fields Pro?
 
-Classic custom field builders give you an empty canvas. Smart Fields Pro gives you **finished field sets for real industries**. Open a post, pick **Real Estate** and you get price, area, rooms, floor, heating and location. Pick **Recipe** and you get ingredients, illustrated steps, prep time, servings and scores. Every field is already mapped to **schema.org JSON-LD**, included in search and styled for mobile.
+Classic custom field builders give you an empty canvas. Smart Fields Pro gives you **finished field sets for real industries**. Open a post, choose **Real Estate** and you get price, area, rooms, floor, heating and location. Choose **Recipe** and ingredients, steps with images, times and servings are ready. Every field is mapped to **schema.org JSON-LD**, searchable and mobile friendly.
 
-Still need something custom? Add your own fields with the drag-and-drop builder, or start from a blank group.
+Developers get a familiar API too: `sfp_get_field()`, `sfp_have_rows()`, `sfp_update_field()`… An ACF migration table and theme examples live in the **Developer guide** inside wp-admin.
+
+## New in 1.4.1
+
+- 🧩 **Modules:** switch off Shop, Appointments, Forms, Reviews, Video player, Ads, Currencies, Search or the WooCommerce integration. A switched-off module **loads no code**; its data is kept.
+- 👩‍💻 **ACF-style API:** `sfp_get_field_object()`, `sfp_update_field()`, `sfp_delete_field()`, `sfp_have_rows()` / `sfp_the_row()` / `sfp_get_sub_field()` / `sfp_get_row_layout()` (nested loops too).
+- 🗂 **Groups in code and JSON sync:** `sfp_add_local_group()` and a `sfp-json` folder in your theme (git-friendly, like ACF Local JSON).
+- 📘 **Developer guide in wp-admin:** colour-highlighted code, contents, search and copy buttons; English and Turkish.
+- 💾 **One Save button** with an "Unsaved changes" warning; Orders / Appointments tabs show or hide at once with their switch.
+- 🧹 Switching the shop or appointments off removes their pages and menu items, switching on brings them back. Deleting an ad deletes its statistics.
+- 🎯 The front-end box follows the **template order exactly**; Smart Social Pro forms use the same layout as the editor.
+- ✅ `uploadDate` with time zone for Google; accessibility fixes (heading order, contrast, list markup).
 
 ## Features
 
 ### 🧩 Templates & fields
-- **20 ready-made templates:** Real Estate, Recipe, Product, Movie, TV Series, Event, Job Posting, Vehicle, Book, Hotel, Restaurant, Course, Software, WordPress Plugin / Theme, Program Download, Video Game, Music Album, Local Business, Product Review and Doctor / Clinic, plus a Blank group.
-- **32 field types:** text, rich editor, number, range, email, URL, phone, select, multi select, radio, checkboxes, yes/no, date, time, duration, price (multi-currency), star rating, **multi rating**, color, address + map, list, key–value table, **grouped list**, **steps with image/video**, image, gallery, file, **download with counter**, video and section heading.
+- **22 ready-made templates:** Real Estate, Recipe, Product, Movie, TV Series, Event, Job Posting, Vehicle, Book, Hotel, Restaurant, Course, Software, WordPress Plugin / Theme, Program Download, Video Game, Music Album, Local Business, Beauty Center / Spa, Hairdresser / Barber, Product Review and Doctor / Clinic. Plus a Blank group.
+- **60 field types** in an ACF-style picker: price (multi-currency), ratings, address + map, steps with images, media gallery, downloads with a counter, **repeater, group, flexible content, relationship, taxonomy, user, link, oEmbed, icon picker, tab, accordion** and more.
 - **Rich text Short Description** in every template. When a post has no content it becomes the excerpt, the search text, the WooCommerce short description and the JSON-LD description.
 - **Drag-and-drop field builder** with icons, widths, units, defaults, options, required fields and per-field search/filter/card switches.
 - Works in **Gutenberg and the Classic Editor**. Required fields lock publishing.
@@ -101,21 +112,37 @@ Optional: enable **Reviews & Ratings**, **Mail/SMTP**, **Currencies** and the **
 
 Gutenberg blocks: **Smart Fields** (all fields, one field or the gallery) and **Smart Fields Search**.
 
-## PHP API
+## Developer API
 
 ```php
-// Raw value
-$price = sfp_get_field( 'price' );
+// Read
+$price = sfp_get_field( 'price' );            // raw
+sfp_the_field( 'price' );                      // formatted
+$f = sfp_get_field_object( 'rooms' );          // label, type, value
 
-// Formatted HTML
-sfp_the_field( 'price' );
+// Write and delete
+sfp_update_field( 'price', 2450000, $post_id );
+sfp_delete_field( 'old_price', $post_id );
 
-// Plain text
-echo esc_html( sfp_get_field( 'rooms', null, 'plain' ) );
+// Repeater / flexible content
+while ( sfp_have_rows( 'team' ) ) : sfp_the_row();
+	echo esc_html( sfp_get_sub_field( 'name' ) );
+endwhile;
 
-// Whole box
-sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
+// A field group in code (JSON sync with a sfp-json folder in the theme)
+sfp_add_local_group( array( 'id' => 'gthemehero', 'title' => 'Hero', 'post_types' => array( 'page' ), 'active' => 1, 'fields' => array(
+	array( 'key' => 'hero_title', 'label' => 'Title', 'type' => 'text' ),
+) ) );
 ```
+
+| ACF | Smart Fields Pro |
+|---|---|
+| `get_field()` / `the_field()` | `sfp_get_field()` / `sfp_the_field()` |
+| `update_field()` / `delete_field()` | `sfp_update_field()` / `sfp_delete_field()` |
+| `have_rows()` / `the_row()` / `get_sub_field()` | `sfp_have_rows()` / `sfp_the_row()` / `sfp_get_sub_field()` |
+| `acf_add_local_field_group()` | `sfp_add_local_group()` |
+
+Also: `sfp_api()` (groups, validated saving, front-end forms), REST routes under `/wp-json/sfp/v1`, `SFPFront.rest()` and more than 25 hooks. Full guide: **Smart Fields → Usage → Developer guide** or [`docs/developer-api.md`](docs/developer-api.md).
 
 **Filters:** `sfp_templates`, `sfp_field_types`, `sfp_schema_data`, `sfp_render_box`, `sfp_format_value`, `sfp_search_query_args`, `sfp_schema_reviews_max`, `sfp_reviews_active`, `sfp_reviews_on_products`.
 
@@ -126,6 +153,16 @@ sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
 - Optional: WooCommerce (HPOS supported)
 
 ## Changelog
+
+### 1.4.1
+- Modules screen (a switched-off module loads no code), ACF-style API (`sfp_have_rows`, `sfp_update_field`, `sfp_get_field_object`…), `sfp_add_local_group()` and JSON sync, a colour-highlighted developer guide in wp-admin.
+- One Save button, instant tab visibility, shop / appointment page and menu cleanup, ad statistics removed with the ad.
+- Template order on the front end, editor layout in Smart Social Pro forms, `uploadDate` and accessibility fixes.
+
+### 1.4.0
+- Shop (cart, checkout, order tracking, PayTR / Stripe / PayPal), appointments, movie / TV player and video ads, shipping profiles, country / province lists, seller details.
+- 60 field types including repeater, group, flexible content and relationship; per-post customizing.
+- `sfp_api()`, REST routes, WPML / Polylang, Elementor / Bricks, Yoast / Rank Math integrations, Smart Social Pro bridge.
 
 ### 1.3.1
 
