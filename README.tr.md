@@ -30,15 +30,26 @@
 
 ## Neden Smart Fields Pro?
 
-Klasik özel alan eklentileri size boş bir sayfa verir. Smart Fields Pro ise **gerçek sektörler için hazırlanmış alan setleri** sunar. Yazıyı açıp **Emlak** şablonunu seçtiğinizde fiyat, metrekare, oda sayısı, kat, ısınma ve konum alanları gelir. **Tarif** seçtiğinizde malzemeler, resimli adımlar, hazırlık süresi, porsiyon ve puanlar hazırdır. Her alan **schema.org JSON-LD** verisine bağlıdır, aramaya dahildir ve mobil uyumlu tasarlanmıştır.
+Klasik özel alan eklentileri size boş bir sayfa verir. Smart Fields Pro ise **gerçek sektörler için hazırlanmış alan setleri** sunar. Yazıyı açıp **Emlak** şablonunu seçtiğinizde fiyat, metrekare, oda sayısı, kat, ısınma ve konum alanları gelir. **Tarif** seçtiğinizde malzemeler, resimli adımlar, süreler ve porsiyon hazırdır. Her alan **schema.org JSON-LD** verisine bağlıdır, aramaya dahildir ve mobil uyumludur.
 
-Ekstra bir şeye mi ihtiyacınız var? Sürükle-bırak oluşturucuyla kendi alanlarınızı ekleyin ya da boş bir grupla başlayın.
+Kod yazan geliştiriciler için de tanıdık bir API var: `sfp_get_field()`, `sfp_have_rows()`, `sfp_update_field()`… ACF'den geçiş tablosu ve tema örnekleri yönetim panelindeki **Geliştirici rehberinde**.
+
+## 1.4.1'deki yenilikler
+
+- 🧩 **Modüller:** Dükkan, Randevular, Formlar, Yorumlar, Video oynatıcı, Reklamlar, Para birimleri, Arama ve WooCommerce entegrasyonu ayrı ayrı kapatılabilir. Kapalı modül **hiç kod yüklemez**, verisi korunur.
+- 👩‍💻 **ACF tarzı API:** `sfp_get_field_object()`, `sfp_update_field()`, `sfp_delete_field()`, `sfp_have_rows()` / `sfp_the_row()` / `sfp_get_sub_field()` / `sfp_get_row_layout()` (iç içe döngüler dahil).
+- 🗂 **Kodla grup ve JSON senkronu:** `sfp_add_local_group()` ve temadaki `sfp-json` klasörü (git dostu, ACF Local JSON gibi).
+- 📘 **Panel içinde geliştirici rehberi:** renkli kod, içindekiler, arama ve kopyalama düğmeleri; Türkçe ve İngilizce.
+- 💾 **Tek Kaydet düğmesi** ve "Kaydedilmemiş değişiklikler" uyarısı; Siparişler / Randevular sekmeleri anahtarla anında açılıp kapanır.
+- 🧹 Dükkan veya randevu kapatılınca sayfaları ve menü öğeleri kaldırılır, açılınca geri gelir. Silinen reklamın istatistikleri de silinir.
+- 🎯 Ön yüz kutusu **şablon sırasını birebir** izler; Smart Social Pro formları düzenleyiciyle aynı düzende.
+- ✅ Google için `uploadDate` saat dilimiyle; erişilebilirlik (başlık sırası, kontrast, liste yapısı) düzeltmeleri.
 
 ## Özellikler
 
 ### 🧩 Şablonlar ve alanlar
-- **20 hazır şablon:** Emlak, Yemek Tarifi, Ürün, Film, Dizi, Etkinlik, İş İlanı, Vasıta, Kitap, Otel, Restoran, Kurs, Yazılım, WordPress Eklenti / Tema, Program İndirme, Video Oyunu, Müzik Albümü, Yerel İşletme, Ürün İncelemesi ve Doktor / Klinik. Ayrıca bir Boş Grup.
-- **32 alan türü:** metin, zengin editör, sayı, kaydırıcı, e-posta, bağlantı, telefon, açılır liste, çoklu seçim, radyo, onay kutuları, evet/hayır, tarih, saat, süre, fiyat (çoklu para birimi), yıldızlı puan, **çoklu puan**, renk, adres + harita, liste, özellik–değer tablosu, **gruplu liste**, **resimli/videolu adımlar**, görsel, galeri, dosya, **sayaçlı indirme**, video ve bölüm başlığı.
+- **22 hazır şablon:** Emlak, Yemek Tarifi, Ürün, Film, Dizi, Etkinlik, İş İlanı, Vasıta, Kitap, Otel, Restoran, Kurs, Yazılım, WordPress Eklenti / Tema, Program İndirme, Video Oyunu, Müzik Albümü, Yerel İşletme, Güzellik Merkezi / Spa, Kuaför / Berber, Ürün İncelemesi ve Doktor / Klinik. Ayrıca Boş Grup.
+- **60 alan türü** ACF tarzı seçicide: fiyat (çoklu para birimi), puanlar, adres + harita, resimli adımlar, medya galerisi, sayaçlı indirme, **tekrarlayıcı, grup, esnek içerik, ilişki, taksonomi, kullanıcı, bağlantı, oEmbed, ikon seçici, sekme, akordeon** ve daha fazlası.
 - Tüm şablonlarda **zengin metinli Kısa Açıklama**. İçerik yazmasanız bile özet, arama metni, WooCommerce kısa açıklaması ve JSON-LD açıklaması buradan alınır.
 - İkon, genişlik, birim, varsayılan değer, seçenekler ve zorunlu alan ayarlarıyla **sürükle-bırak alan oluşturucu**. Her alan için arama, filtre ve kart anahtarları vardır.
 - **Gutenberg ve Klasik Editör** ile çalışır. Zorunlu alanlar doldurulmadan yayınlanamaz.
@@ -101,21 +112,37 @@ Ekstra bir şeye mi ihtiyacınız var? Sürükle-bırak oluşturucuyla kendi ala
 
 Gutenberg blokları: **Smart Fields** (tüm alanlar, tek alan veya galeri) ve **Smart Fields Search**.
 
-## PHP API
+## Geliştirici API'si
 
 ```php
-// Ham değer
-$price = sfp_get_field( 'price' );
+// Değer okuma
+$price = sfp_get_field( 'price' );            // ham
+sfp_the_field( 'price' );                      // biçimlenmiş
+$f = sfp_get_field_object( 'rooms' );          // etiket, tip, değer
 
-// Biçimlendirilmiş HTML
-sfp_the_field( 'price' );
+// Yazma ve silme
+sfp_update_field( 'price', 2450000, $post_id );
+sfp_delete_field( 'old_price', $post_id );
 
-// Düz metin
-echo esc_html( sfp_get_field( 'rooms', null, 'plain' ) );
+// Tekrarlayıcı / esnek içerik
+while ( sfp_have_rows( 'team' ) ) : sfp_the_row();
+	echo esc_html( sfp_get_sub_field( 'name' ) );
+endwhile;
 
-// Tüm kutu
-sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
+// Kodla alan grubu (temada sfp-json klasörüyle JSON senkronu)
+sfp_add_local_group( array( 'id' => 'gthemehero', 'title' => 'Hero', 'post_types' => array( 'page' ), 'active' => 1, 'fields' => array(
+	array( 'key' => 'hero_title', 'label' => 'Başlık', 'type' => 'text' ),
+) ) );
 ```
+
+| ACF | Smart Fields Pro |
+|---|---|
+| `get_field()` / `the_field()` | `sfp_get_field()` / `sfp_the_field()` |
+| `update_field()` / `delete_field()` | `sfp_update_field()` / `sfp_delete_field()` |
+| `have_rows()` / `the_row()` / `get_sub_field()` | `sfp_have_rows()` / `sfp_the_row()` / `sfp_get_sub_field()` |
+| `acf_add_local_field_group()` | `sfp_add_local_group()` |
+
+Ayrıca: `sfp_api()` (gruplar, doğrulamalı kayıt, ön yüz formları), `/wp-json/sfp/v1` REST rotaları, `SFPFront.rest()` ve 25'ten fazla kanca. Tam rehber: **Smart Fields → Kullanım → Geliştirici rehberi** veya [`docs/developer-api-tr.md`](docs/developer-api-tr.md).
 
 **Filtreler:** `sfp_templates`, `sfp_field_types`, `sfp_schema_data`, `sfp_render_box`, `sfp_format_value`, `sfp_search_query_args`, `sfp_schema_reviews_max`, `sfp_reviews_active`, `sfp_reviews_on_products`.
 
@@ -126,6 +153,16 @@ sfp_fields_box( get_the_ID(), array( 'layout' => 'table' ) );
 - İsteğe bağlı: WooCommerce (HPOS desteklenir)
 
 ## Değişiklik Günlüğü
+
+### 1.4.1
+- Modüller ekranı (kapalı modül kod yüklemez), ACF tarzı API (`sfp_have_rows`, `sfp_update_field`, `sfp_get_field_object`…), `sfp_add_local_group()` ve JSON senkronu, panelde renkli kodlu geliştirici rehberi.
+- Tek Kaydet düğmesi, anlık sekme görünürlüğü, dükkan/randevu sayfa ve menü temizliği, silinen reklamın istatistik temizliği.
+- Ön yüzde şablon sırası, Smart Social Pro formlarında editörle aynı düzen, `uploadDate` ve erişilebilirlik düzeltmeleri.
+
+### 1.4.0
+- Dükkan (sepet, ödeme, sipariş takibi, PayTR / Stripe / PayPal), randevu sistemi, film/dizi oynatıcı ve video reklamları, kargo profilleri, ülke/il listeleri, satıcı bilgileri.
+- Tekrarlayıcı, grup, esnek içerik, ilişki ve daha fazlasıyla 60 alan türü; yazıya özel düzen.
+- `sfp_api()`, REST rotaları, WPML / Polylang, Elementor / Bricks, Yoast / Rank Math entegrasyonları, Smart Social Pro köprüsü.
 
 ### 1.3.1
 
